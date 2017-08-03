@@ -3,13 +3,14 @@ const router = express.Router();
 const googleFinance = require("google-finance");
 const moment = require('moment');
 var data = [];
+var stock = ['AAPL', 'GOOG'];
 var date = new Date();
 
 router.get('/data/:stock', function(req, res){
 	googleFinance.historical({
 		symbol: req.params.stock,
 		from: '2013-01-01',
-		to: '2017-08-02'
+		to: new Date()
 	}, function (err, quotes) {
 		if(err) return err;
 		for(var i = 0; i < quotes.length; i++){
@@ -22,8 +23,9 @@ router.get('/data/:stock', function(req, res){
 });
 
 router.get('/', function(req, res){
+	//console.log(stock);
 	res.render('index', {
-		data: data
+		data: stock
 	});
 });
 

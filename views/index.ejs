@@ -15,16 +15,22 @@
   crossorigin="anonymous"></script>
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 
-
 <div id="container" style="height: 400px; min-width: 310px"></div>
+<input id = "stock" type="text" placeholder="Search" name="stock" required/>
+<button type="submit" class="btn btn-default" id = "add" value="add" href="/">Add</button>
 <% for(var i = 0; i < data.length; i++){ %>
-<%= data[i] %></br>
+    <%= data[i] %></br>
 <% } %>
 
 <script type="text/javascript">
 var seriesOptions = [],
     seriesCounter = 0,
-    names = ['MSFT', 'AAPL', 'GOOG', 'AMZN', 'BABA'];
+    names = ['AAPL', 'GOOG'];
+    
+/*$("#add").click(function(){
+    names.push($("#stock").value);
+    console.log(names);
+});*/
 
 /**
  * Create the chart when all data is loaded
