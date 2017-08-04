@@ -26,10 +26,19 @@ router.get('/data/:stock', function(req, res){
 	
 });
 
-router.get('/', function(req, res){
-	stock.push(req.body.stock);
+router.post('/', function(req, res){
+	if(stock.indexOf(req.body.stock) === -1){
+		stock.push(req.body.stock);
+	}
+	else{
+		console.log("already");
+	}
+	console.log(req.body.stock);
+	
 	console.log(stock);
-	res.render('index');
+	res.render('index',{
+		data: stock
+	});
 });
 
 
