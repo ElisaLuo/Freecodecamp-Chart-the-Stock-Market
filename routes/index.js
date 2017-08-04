@@ -12,7 +12,11 @@ router.get('/data/:stock', function(req, res){
 		from: '2013-01-01',
 		to: new Date()
 	}, function (err, quotes) {
-		if(err) return err;
+		if(err){
+			res.render('index', {
+				error: "Incorrect or not existing stock code"
+			})
+		};
 		for(var i = 0; i < quotes.length; i++){
 			data.push([Number(moment(quotes[i].date, "MMMM D, YYYY").format("X"))*1000, quotes[i].close]);
 		}
@@ -23,10 +27,9 @@ router.get('/data/:stock', function(req, res){
 });
 
 router.get('/', function(req, res){
-	//console.log(stock);
-	res.render('index', {
-		data: stock
-	});
+	stock.push(req.body.stock);
+	console.log(stock);
+	res.render('index');
 });
 
 
