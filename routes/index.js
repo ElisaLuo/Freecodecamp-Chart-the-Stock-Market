@@ -13,7 +13,7 @@ router.get('/data/:stock', function(req, res){
 		to: new Date()
 	}, function (err, quotes) {
 		if(err){
-			res.render('index', {
+			res.render('error', {
 				error: "Incorrect or not existing stock code"
 			})
 		};
@@ -27,27 +27,38 @@ router.get('/data/:stock', function(req, res){
 });
 
 router.get("/", function(req, res){
-	res.render("index");
-})
+	res.render("index", {
+		data: stock
+	});
+});
 
 router.post('/', function(req, res){
-	if(stock.indexOf(req.body.stock) === -1){
-		stock.filter(Boolean)
+	if(stock.filter(Boolean).indexOf(req.body.stock) === -1){
+		stock.filter(Boolean);
 		stock.push(req.body.stock);
+		stock = stock.filter(function(element){
+			return element !== req.body.name;
+		});
+		res.render('index',{
+			error: false,
+			data: stock.filter(Boolean),
+			message: "The stock you are searching for already exists"
+		});
 	}
 	else{
-		stock.filter(Boolean)
-		console.log("already");
+		stock.filter(Boolean);
+		stock = stock.filter(function(element){
+			return element !== req.body.name;
+		});
+		res.render('index',{
+			error: true,
+			data: stock.filter(Boolean),
+			message: "The stock you are searching for already exists"
+		});
 	}
-	stock = stock.filter(function(element){
-		return element !== req.body.name;
-	})
 	console.log(req.body.stock);
 	console.log(stock);
 	console.log(req.body.name);
-	res.render('index',{
-		data: stock.filter(Boolean)
-	});
 });
 
 
