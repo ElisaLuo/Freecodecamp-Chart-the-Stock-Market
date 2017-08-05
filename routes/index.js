@@ -28,16 +28,21 @@ router.get('/data/:stock', function(req, res){
 
 router.post('/', function(req, res){
 	if(stock.indexOf(req.body.stock) === -1){
+		stock.filter(Boolean)
 		stock.push(req.body.stock);
 	}
 	else{
+		stock.filter(Boolean)
 		console.log("already");
 	}
+	stock = stock.filter(function(element){
+		return element !== req.body.name;
+	})
 	console.log(req.body.stock);
-	
 	console.log(stock);
+	console.log(req.body.name);
 	res.render('index',{
-		data: stock
+		data: stock.filter(Boolean)
 	});
 });
 

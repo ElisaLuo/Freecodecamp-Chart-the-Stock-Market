@@ -20,8 +20,12 @@
     <input id = "stock" type="text" placeholder="Search" name="stock" required/>
     <input type="submit" class="btn btn-default add" id = "add" value="Add">
 </form>
+
 <% for(var i = 0; i < data.length; i++){ %>
-<div><%=data[i]%></div>
+<form action="/" method="POST">
+    <input name="name" value="<%=data[i]%>">
+    <input type="submit" class="btn btn-danger" value="X">
+</form>
 <% } %>
     
 
