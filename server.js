@@ -5,12 +5,10 @@ const bodyParser = require('body-parser');
 
 process.env.NODE_ENV = 'production';
 
+//Sets up environment
 app.use(express.static('public'));
-
-
 app.set('port', process.env.PORT || process.env.IP );
 app.set('view engine', 'ejs');
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

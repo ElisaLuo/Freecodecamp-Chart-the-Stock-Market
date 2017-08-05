@@ -6,6 +6,7 @@ var data = [];
 var stock = ['AAPL', 'GOOG'];
 var date = new Date();
 
+//Sends JSON stock data to /data/(stock)
 router.get('/data/:stock', function(req, res){
 	googleFinance.historical({
 		symbol: req.params.stock,
@@ -13,8 +14,10 @@ router.get('/data/:stock', function(req, res){
 		to: new Date()
 	}, function (err, quotes) {
 		if(err){
-			res.render('error', {
-				error: "Incorrect or not existing stock code"
+			res.render('index',{
+				error: true,
+				data: stock,
+				message: "The stock you are searching for is not found"
 			})
 		};
 		for(var i = 0; i < quotes.length; i++){
@@ -26,16 +29,22 @@ router.get('/data/:stock', function(req, res){
 	
 });
 
+//Renders initial page
 router.get("/", function(req, res){
 	res.render("index", {
-		data: stock
+		error: false,
+		data: stock,
+		message: "The stock you are searching for lalready exists"
 	});
 });
 
+//Posts information about the required stock
 router.post('/', function(req, res){
 	if(stock.filter(Boolean).indexOf(req.body.stock) === -1){
 		stock.filter(Boolean);
-		stock.push(req.body.stock);
+		if(req.body.stock !== "undefined"){
+			stock.push(req.body.stock);
+		}
 		stock = stock.filter(function(element){
 			return element !== req.body.name;
 		});
@@ -53,12 +62,9 @@ router.post('/', function(req, res){
 		res.render('index',{
 			error: true,
 			data: stock.filter(Boolean),
-			message: "The stock you are searching for already exists"
+			message: "The stock you are searching for lalready exists"
 		});
 	}
-	console.log(req.body.stock);
-	console.log(stock);
-	console.log(req.body.name);
 });
 
 

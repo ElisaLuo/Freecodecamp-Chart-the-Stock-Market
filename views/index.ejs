@@ -15,7 +15,10 @@
   crossorigin="anonymous"></script>
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<link rel="stylesheet/less" type="text/css" href="styles.less" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.min.js"></script>
 
+<h1>Stock Charter</h1>
 <div id="container" style="height: 400px; min-width: 310px"></div>
 <form action = "/" method="POST">
     <input id = "stock" type="text" placeholder="Search" name="stock" required/>
@@ -27,7 +30,7 @@
 <% } %>
 <% for(var i = 0; i < data.length; i++){ %>
 <form action="/" method="POST">
-    <input name="name" value="<%=data[i]%>">
+    <input name="name" value="<%=data[i]%>" disabled>
     <input type="submit" class="btn btn-danger" value="X">
 </form>
 <% } %>
@@ -42,27 +45,16 @@ var seriesOptions = [],
  * Create the chart when all data is loaded
  * @returns {undefined}
  */
+ //Creat chart function
 function createChart() {
     Highcharts.stockChart('container', {
         rangeSelector: {
             selected: 4
         },
-        yAxis: {
-            labels: {
-                formatter: function () {
-                    return (this.value > 0 ? ' + ' : '') + this.value + '%';
-                }
-            },
-            plotLines: [{
-                value: 0,
-                width: 2,
-                color: 'silver'
-            }]
-        },
         legend: {
             enabled: true,
             itemStyle:{
-                fontSize: '15px'
+                fontSize: '20px'
             }
           },
         plotOptions: {
@@ -79,7 +71,220 @@ function createChart() {
         series: seriesOptions
     });
 }
+//Chart theme
+Highcharts.createElement('link', {
+  href: '//fonts.googleapis.com/css?family=Unica+One',
+  rel: 'stylesheet',
+  type: 'text/css'
+}, null, document.getElementsByTagName('head')[0]);
 
+Highcharts.theme = {
+  colors: ["#2b908f", "#90ee7e", "#f45b5b", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+  chart: {
+    backgroundColor: '#2a2a2b',
+    style: {
+      fontFamily: "'Unica One', sans-serif"
+    },
+    plotBorderColor: '#606063'
+  },
+  title: {
+    style: {
+      color: '#E0E0E3',
+      textTransform: 'uppercase',
+      fontSize: '20px'
+    }
+  },
+  subtitle: {
+    style: {
+      color: '#E0E0E3',
+      textTransform: 'uppercase'
+    }
+  },
+  xAxis: {
+    gridLineColor: '#707073',
+    labels: {
+      style: {
+        color: '#E0E0E3'
+      }
+    },
+    lineColor: '#707073',
+    minorGridLineColor: '#505053',
+    tickColor: '#707073',
+    title: {
+      style: {
+        color: '#A0A0A3'
+
+      }
+    }
+  },
+  yAxis: {
+    gridLineColor: '#707073',
+    labels: {
+      style: {
+        color: '#E0E0E3'
+      }
+    },
+    lineColor: '#707073',
+    minorGridLineColor: '#505053',
+    tickColor: '#707073',
+    tickWidth: 1,
+    title: {
+      style: {
+        color: '#A0A0A3'
+      }
+    }
+  },
+  tooltip: {
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    style: {
+      color: '#F0F0F0',
+      fontSize: "15px"
+    }
+  },
+  plotOptions: {
+    series: {
+      dataLabels: {
+        color: '#B0B0B3'
+      },
+      marker: {
+        lineColor: '#333'
+      }
+    },
+    boxplot: {
+      fillColor: '#505053'
+    },
+    candlestick: {
+      lineColor: 'white'
+    },
+    errorbar: {
+      color: 'white'
+    }
+  },
+  legend: {
+    itemStyle: {
+      color: '#E0E0E3'
+    },
+    itemHoverStyle: {
+      color: '#FFF'
+    },
+    itemHiddenStyle: {
+      color: '#606063'
+    }
+  },
+  credits: {
+    style: {
+      color: '#666'
+    }
+  },
+  labels: {
+    style: {
+      color: '#707073',
+      fontSize: '15px'
+    }
+  },
+
+  drilldown: {
+    activeAxisLabelStyle: {
+      color: '#F0F0F3',
+      fontSize: '15px'
+    },
+    activeDataLabelStyle: {
+      color: '#F0F0F3',
+      fontSize: '15px'
+    }
+  },
+
+  navigation: {
+    buttonOptions: {
+      symbolStroke: '#DDDDDD',
+      theme: {
+        fill: '#505053',
+        fontSize: '15px'
+      }
+    }
+  },
+
+  // scroll charts
+  rangeSelector: {
+    buttonTheme: {
+      fill: '#505053',
+      stroke: '#000000',
+      style: {
+        color: '#CCC',
+      fontSize: '15px'
+      },
+      states: {
+        hover: {
+          fill: '#707073',
+          stroke: '#000000',
+          style: {
+            color: 'white',
+            fontSize: '15px'
+          }
+        },
+        select: {
+          fill: '#000003',
+          stroke: '#000000',
+          style: {
+            color: 'white',
+            fontSize: '15px'
+          }
+        }
+      }
+    },
+    inputBoxBorderColor: '#505053',
+    inputStyle: {
+      backgroundColor: '#333',
+      color: 'silver',
+      fontSize: '15px'
+    },
+    labelStyle: {
+      color: 'silver',
+      fontSize: '15px'
+    }
+  },
+
+  navigator: {
+    handles: {
+      backgroundColor: '#666',
+      borderColor: '#AAA'
+    },
+    outlineColor: '#CCC',
+    maskFill: 'rgba(255,255,255,0.1)',
+    series: {
+      color: '#7798BF',
+      lineColor: '#A6C7ED'
+    },
+    xAxis: {
+      gridLineColor: '#505053'
+    }
+  },
+
+  scrollbar: {
+    barBackgroundColor: '#808083',
+    barBorderColor: '#808083',
+    buttonArrowColor: '#CCC',
+    buttonBackgroundColor: '#606063',
+    buttonBorderColor: '#606063',
+    rifleColor: '#FFF',
+    trackBackgroundColor: '#404043',
+    trackBorderColor: '#404043',
+    fontSize: '15px'
+  },
+
+  // special colors for some of the
+  legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
+  background2: '#505053',
+  dataLabelsColor: '#B0B0B3',
+  textColor: '#C0C0C0',
+  contrastTextColor: '#F0F0F3',
+  maskColor: 'rgba(255,255,255,0.3)'
+};
+
+// Apply the theme
+Highcharts.setOptions(Highcharts.theme);
+
+//Gets data and renders the chart
 $.each(names, function (i, name) {
 
     $.getJSON('https://stocks-chart-elisal.c9users.io/data/' + name.toUpperCase(), function (data) {
