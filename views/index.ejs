@@ -57,6 +57,18 @@ function createChart() {
                 fontSize: '20px'
             }
           },
+           yAxis: {
+            labels: {
+                formatter: function () {
+                    return (this.value > 0 ? ' + ' : '') + this.value + '%';
+                }
+            },
+            plotLines: [{
+                value: 0,
+                width: 2,
+                color: 'silver'
+            }]
+        },
         plotOptions: {
             series: {
                 compare: 'percent',
