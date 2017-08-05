@@ -26,6 +26,10 @@ router.get('/data/:stock', function(req, res){
 	
 });
 
+router.get("/", function(req, res){
+	res.render("index");
+})
+
 router.post('/', function(req, res){
 	if(stock.indexOf(req.body.stock) === -1){
 		stock.filter(Boolean)
