@@ -34,7 +34,17 @@
 <% } %>
 
 
-    
+<% if(invalid.length !== 0){ %>
+<% for(var i = 0; i < invalid.length; i++){ %>
+<form action="/" method="POST" class="stocks">
+    <input name="name" value="<%=invalid[i]%>" readonly class="stock-name">
+    <input type="submit" class="btn btn-danger x" value="✖">
+    <p class="desc"></p>
+</form>
+<% } %>
+<% } %>
+
+ 
 <form action = "/" method="POST" class="stocks">
     <input type="text" placeholder="Search" name="stock" class="stock-name" required/>
     <input type="submit" class="btn btn-default add" id = "add" value="Add">
