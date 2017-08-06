@@ -44,7 +44,7 @@ router.post('/', function(req, res){
 	if(stock.filter(Boolean).indexOf(req.body.stock) === -1){ //if stock arr does not have the required stock
 		stock.filter(Boolean);
 		if(req.body.stock !== "undefined"){ //if stock is not equals to undefined
-			stock.push(req.body.stock);
+			stock.push(req.body.stock.toUpperCase());
 		}
 		stock = stock.filter(function(element){ //if x is clicked, delete stock
 			return element !== req.body.name;
