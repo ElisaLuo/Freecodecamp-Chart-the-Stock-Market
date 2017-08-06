@@ -4,10 +4,12 @@ const googleFinance = require("google-finance");
 const moment = require('moment');
 const StockSymbolLookup = require('stock-symbol-lookup');
 var data = [];
-var stock = ['AAPL', 'GOOG'];
+var stock = ['AAPL', 'GOOG', 'aa'];
 var name = [];
+var valid = [];
 
-StockSymbolLookup.loadData()
+function loadData(){
+	StockSymbolLookup.loadData()
     .then((data) => {
     	name = [];
         for(var i = 0; i < data.securities.length; i++){
@@ -16,16 +18,24 @@ StockSymbolLookup.loadData()
             	if(stock[j] == data.securities[i].symbol){
                 	name.push([data.securities[i].symbol, data.securities[i].securityName]);
             	}
-            	/*else{
-            		stock = stock.filter(function(element){
-            			return element !== stock[j];
-            		})
-            	}*/
         	}
 		}
+		valid = stock.filter(function(element){
+            for(var i = 0; i < data.securities.length; i++){
+                if(data.securities[i].symbol === element){
+                    return element;
+                }
+            }
+        });
+        stock = stock.filter(function(element){
+            return valid.indexOf(element) === -1;
+        });
         console.log(name);
         console.log(stock);
+        console.log(valid);
     });
+}
+
 
 //Posts information about the required stock
 router.post('/', function(req, res){
@@ -64,20 +74,7 @@ router.post('/', function(req, res){
 		stock = stock.filter(function(element){
 			return element !== req.body.name;
 		});
-		StockSymbolLookup.loadData()
-    .then((data) => {
-    	name = [];
-        for(var i = 0; i < data.securities.length; i++){
-        	for(var j = 0; j < stock.filter(Boolean).length; j++){
-        		stock = stock.filter(Boolean);
-            	if(stock[j] == data.securities[i].symbol){
-                	name.push([data.securities[i].symbol, data.securities[i].securityName]);
-            	}
-        	}
-		}
-        console.log(name);
-        console.log(stock);
-    });
+		loadData();
 		res.render('index',{
 			error: true,
 			data: stock.filter(Boolean),
@@ -115,20 +112,7 @@ router.get('/data/:stock', function(req, res){
 
 //Renders initial page
 router.get("/", function(req, res){
-	StockSymbolLookup.loadData()
-    .then((data) => {
-    	name = [];
-        for(var i = 0; i < data.securities.length; i++){
-        	for(var j = 0; j < stock.filter(Boolean).length; j++){
-        		stock = stock.filter(Boolean);
-            	if(stock[j] == data.securities[i].symbol){
-                	name.push([data.securities[i].symbol, data.securities[i].securityName]);
-            	}
-        	}
-		}
-        console.log(name);
-        console.log(stock);
-    });
+	loadData();
 	res.render("index", {
 		error: false,
 		data: stock,
