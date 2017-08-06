@@ -89,6 +89,7 @@ router.post('/', function(req, res){
 			return element !== req.body.name;
 		});
 		loadData();
+		//needs to use json and express v4 +
 		res.json({ //render data
 			invalid: stocks,
 			error: true,
