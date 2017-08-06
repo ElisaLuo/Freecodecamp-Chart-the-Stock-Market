@@ -5,7 +5,7 @@ const moment = require('moment');
 const StockSymbolLookup = require('stock-symbol-lookup');
 var data = []; // data to be graphed
 var stocks = []; //invalid data
-var stock = ['AAPL', 'GOOG', 'aa']; //initial data
+var stock = ['AAPL', 'GOOG']; //initial data
 var name = []; // data with desc
 var valid = []; // valid data
 
@@ -46,13 +46,13 @@ router.post('/', function(req, res){
 		if(req.body.stock !== "undefined"){ //if stock is not equals to undefined
 			stock.push(req.body.stock);
 		}
-		stock = stock.filter(function(element){
+		stock = stock.filter(function(element){ //if x is clicked, delete stock
 			return element !== req.body.name;
 		});
-		StockSymbolLookup.loadData()
+		StockSymbolLookup.loadData() //looks for data
     	.then((data) => {
-    	name = [];
-        for(var i = 0; i < data.securities.length; i++){
+    	name = []; //resets desc
+        for(var i = 0; i < data.securities.length; i++){ //pushes desc to name
         	for(var j = 0; j < stock.filter(Boolean).length; j++){
         		stock = stock.filter(Boolean);
             	if(stock[j] == data.securities[i].symbol){
@@ -60,20 +60,20 @@ router.post('/', function(req, res){
             	}
         	}
 		}
-		valid = stock.filter(function(element){
+		valid = stock.filter(function(element){ //filters out names which has desc
             for(var i = 0; i < data.securities.length; i++){
                 if(data.securities[i].symbol === element){
                     return element;
                 }
             }
         });
-        stocks = stock.filter(function(element){
+        stocks = stock.filter(function(element){ //filters out names that don't have a desc
             return valid.indexOf(element) === -1;
         });
         console.log(name);
         console.log(stocks);
         console.log(valid);
-        res.render('index',{
+        res.render('index',{ //renders info
         	invalid: stocks,
 			error: false,
 			data: stock,
@@ -83,18 +83,18 @@ router.post('/', function(req, res){
     });
 		
 	}
-	else{
+	else{ //if stock is not found
 		stock.filter(Boolean);
 		stock = stock.filter(function(element){
 			return element !== req.body.name;
 		});
 		loadData();
-		res.render('index',{
+		res.render('index',{ //render data
 			invalid: stocks,
 			error: true,
 			data: stock,
 			names: name,
-			message: "The stock you are searching for lalready exists"
+			message: "The stock you are searching for already exists"
 		});
 	}
 });
@@ -103,12 +103,12 @@ router.post('/', function(req, res){
 
 //Sends JSON stock data to /data/(stock)
 router.get('/data/:stock', function(req, res){
-	googleFinance.historical({
+	googleFinance.historical({ //gets google finance
 		symbol: req.params.stock,
 		from: '2013-01-01',
 		to: new Date()
 	}, function (err, quotes) {
-		if(err){
+		if(err){ //if err
 			res.render('index',{
 				invalid: stocks,
 				error: true,
@@ -128,14 +128,38 @@ router.get('/data/:stock', function(req, res){
 
 //Renders initial page
 router.get("/", function(req, res){
-	loadData();
-	res.render("index", {
-		invalid: stocks,
-		error: false,
-		data: stock,
-		names: name,
-		message: "The stock you are searching for already exists"
-	});
+	StockSymbolLookup.loadData() //looks for data
+    	.then((data) => {
+    	name = []; //resets desc
+        for(var i = 0; i < data.securities.length; i++){ //pushes desc to name
+        	for(var j = 0; j < stock.filter(Boolean).length; j++){
+        		stock = stock.filter(Boolean);
+            	if(stock[j] == data.securities[i].symbol){
+                	name.push([data.securities[i].symbol, data.securities[i].securityName]);
+            	}
+        	}
+		}
+		valid = stock.filter(function(element){ //filters out names which has desc
+            for(var i = 0; i < data.securities.length; i++){
+                if(data.securities[i].symbol === element){
+                    return element;
+                }
+            }
+        });
+        stocks = stock.filter(function(element){ //filters out names that don't have a desc
+            return valid.indexOf(element) === -1;
+        });
+        console.log(name);
+        console.log(stocks);
+        console.log(valid);
+        res.render('index',{ //renders info
+        	invalid: stocks,
+			error: false,
+			data: stock,
+			names: name,
+			message: "The stock you are searching for already exists"
+		});
+    });
 });
 
 module.exports = router;
