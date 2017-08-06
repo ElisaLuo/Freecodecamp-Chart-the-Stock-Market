@@ -313,7 +313,7 @@ Highcharts.setOptions(Highcharts.theme);
 
 //Gets data and renders the chart
 $.each(names, function (i, name) {
-    $.getJSON('https://stocks-chart-elisal.c9users.io/data/' + name.toUpperCase(), function (data) {
+    $.getJSON('https://stock-focus.herokuapp.com/data/' + name.toUpperCase(), function (data) {
         seriesOptions[i] = {
             name: name,
             data: data.data
