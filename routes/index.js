@@ -121,15 +121,6 @@ router.get('/data/:stock', function(req, res){
 		for(var i = 0; i < quotes.length; i++){
 			data.push([Number(moment(quotes[i].date, "MMMM D, YYYY").format("X"))*1000, quotes[i].close]);
 		}
-		if(quotes.length === 0){
-			res.render('index',{
-				invalid: stocks,
-				error: true,
-				data: stock,
-				names: name,
-				message: "The stock you are searching for is not found"
-			});
-		}
 		res.json({data});
 		data = [];
 	});
