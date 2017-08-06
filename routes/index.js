@@ -73,7 +73,7 @@ router.post('/', function(req, res){
         console.log(name);
         console.log(stocks);
         console.log(valid);
-        res.post({ //renders info
+        res.render('index',{ //renders info
         	invalid: stocks,
 			error: false,
 			data: stock,
@@ -89,7 +89,7 @@ router.post('/', function(req, res){
 			return element !== req.body.name;
 		});
 		loadData();
-		res.post({ //render data
+		res.render('index',{ //render data
 			invalid: stocks,
 			error: true,
 			data: stock,
