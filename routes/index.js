@@ -34,7 +34,7 @@ router.get("/", function(req, res){
 	res.render("index", {
 		error: false,
 		data: stock,
-		message: "The stock you are searching for lalready exists"
+		message: "The stock you are searching for already exists"
 	});
 });
 

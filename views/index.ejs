@@ -20,21 +20,21 @@
 
 <h1>Stock Charter</h1>
 <div id="container" style="height: 400px; min-width: 310px"></div>
-<form action = "/" method="POST">
-    <input id = "stock" type="text" placeholder="Search" name="stock" required/>
-    <input type="submit" class="btn btn-default add" id = "add" value="Add">
-</form>
 
 <% if(error){ %>
-    <p><%= message %></p>
+    <p id="error"><%= message %></p>
 <% } %>
 <% for(var i = 0; i < data.length; i++){ %>
-<form action="/" method="POST">
-    <input name="name" value="<%=data[i]%>" disabled>
-    <input type="submit" class="btn btn-danger" value="X">
+<form action="/" method="POST" class="stocks">
+    <input name="name" value="<%=data[i]%>" readonly class="stock-name">
+    <input type="submit" class="btn btn-danger x" value="✖">
 </form>
 <% } %>
     
+<form action = "/" method="POST" class="stocks">
+    <input type="text" placeholder="Search" name="stock" required/>
+    <input type="submit" class="btn btn-default add" id = "add" value="Add">
+</form>
 
 <script type="text/javascript">
 var seriesOptions = [],
