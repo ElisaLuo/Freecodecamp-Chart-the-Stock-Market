@@ -1,14 +1,40 @@
 {
-  "name": "chat-example",
+  "name": "stock-charter",
   "version": "0.0.0",
   "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
   "main": "server.js",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElisaLuo/Freecodecamp-Chart-the-Stock-Market.git"
+  },
   "author": "Mostafa Eweda <mo.eweda@gmail.com>",
   "dependencies": {
     "async": "^0.2.8",
     "express": "^3.2.4",
     "highcharts": "^5.0.14",
-    "socket.io": "^0.9.14"
-  }
+    "socket.io": "^0.9.14",
+    "body-parser": "^1.17.2",
+    "ejs": "^2.5.7",
+    "express-session": "^1.15.5",
+    "google-finance": "^0.1.9",
+    "moment": "^2.18.1",
+    "node-highcharts": "^0.0.2",
+    "passport": "^0.3.2",
+    "stock-symbol-lookup": "^0.2.1"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "node",
+    "express",
+    "moment",
+    "stock"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElisaLuo/Freecodecamp-Chart-the-Stock-Market/issues"
+  },
+  "homepage": "https://github.com/ElisaLuo/Freecodecamp-Chart-the-Stock-Market#readme"
 }
