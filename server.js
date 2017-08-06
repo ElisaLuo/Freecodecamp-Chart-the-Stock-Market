@@ -9,7 +9,7 @@ process.env.NODE_ENV = 'production';
 
 app.use(express.static('public'));
 app.use(session({
-    secret: 'elktrjosd0983jlwsf08easd90',
+    secret: 'etdfgre354hdhcterg',
     resave: true,
     saveUninitialized: true,
 }));
