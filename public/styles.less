@@ -2,7 +2,7 @@
 @font-color: #E0E0E3;
 @box: #F7F7F7;
 @border: none;
-@box-width: 30.5%;
+@box-width: 30%;
 
 body{
     background-color: @background;
@@ -17,15 +17,18 @@ body{
     margin: 20px;
 }
 .stock-name{
-    margin: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
     width: @box-width;
     background-color: @box;
     border: @border;
     font-size: 20px;
+    width: 80%;
 }
 .x{
     float: right;
     margin-top: 20px;
+    margin-right: 10px;
     background-color: @box;
     border: @border;
     color: @font-color;
@@ -34,4 +37,14 @@ body{
         color: @background;
         cursor: pointer;
     }
+}
+.desc{
+    width: 80%;
+    margin-left: 20px;
+    color: black;
+    line-height: 1.25em;
+    max-height: 2.5em;
+    height: 2.5em;
+    overflow: hidden;
+    text-overflow: ellipsis; 
 }

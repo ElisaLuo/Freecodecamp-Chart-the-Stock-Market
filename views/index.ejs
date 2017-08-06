@@ -24,16 +24,21 @@
 <% if(error){ %>
     <p id="error"><%= message %></p>
 <% } %>
-<% for(var i = 0; i < data.length; i++){ %>
+
+<% for(var i = 0; i < names.length; i++){ %>
 <form action="/" method="POST" class="stocks">
-    <input name="name" value="<%=data[i]%>" readonly class="stock-name">
+    <input name="name" value="<%=names[i][0]%>" readonly class="stock-name">
     <input type="submit" class="btn btn-danger x" value="✖">
+    <p class="desc"><%=names[i][1]%></p>
 </form>
 <% } %>
+
+
     
 <form action = "/" method="POST" class="stocks">
     <input type="text" placeholder="Search" name="stock" class="stock-name" required/>
     <input type="submit" class="btn btn-default add" id = "add" value="Add">
+    <p class="desc"></p>
 </form>
 
 <script type="text/javascript">
@@ -298,7 +303,6 @@ Highcharts.setOptions(Highcharts.theme);
 
 //Gets data and renders the chart
 $.each(names, function (i, name) {
-
     $.getJSON('https://stocks-chart-elisal.c9users.io/data/' + name.toUpperCase(), function (data) {
         seriesOptions[i] = {
             name: name,
