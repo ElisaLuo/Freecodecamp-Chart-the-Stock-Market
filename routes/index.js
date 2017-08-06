@@ -73,7 +73,7 @@ router.post('/', function(req, res){
         console.log(name);
         console.log(stocks);
         console.log(valid);
-        res.json({ //renders info
+        res.json('index', { //renders info
         	invalid: stocks,
 			error: false,
 			data: stock,
@@ -90,7 +90,7 @@ router.post('/', function(req, res){
 		});
 		loadData();
 		//needs to use json and express v4 +
-		res.json({ //render data
+		res.json('index', { //render data
 			invalid: stocks,
 			error: true,
 			data: stock,
